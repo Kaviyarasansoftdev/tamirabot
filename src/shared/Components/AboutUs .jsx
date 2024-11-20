@@ -7,6 +7,7 @@ import {
   Award,
   ShieldCheck,
   User,
+  Zap
 } from "lucide-react";
 const AboutUsPage = () => {
   const [activeAccordion, setActiveAccordion] = useState(null);
@@ -88,6 +89,27 @@ const AboutUsPage = () => {
       title: "Quality",
       content: "Ensuring reliability and excellence in every product and service.",
     },
+  ];
+
+  const timelineEvents = [
+    {
+      year: "2020",
+      title: "Company Founding",
+      description: "Established with a vision to revolutionize EV charging technology",
+      icon: Zap
+    },
+    {
+      year: "2021",
+      title: "First Prototype",
+      description: "Developed our first high-efficiency EV connector",
+      icon: Lightbulb
+    },
+    {
+      year: "2022",
+      title: "Market Expansion",
+      description: "Secured key partnerships in the EV ecosystem",
+      icon: Handshake
+    }
   ];
 
   const founder = {
@@ -332,7 +354,67 @@ const AboutUsPage = () => {
           </div>
         </div>
       </section>
-      
+
+       {/* Timeline Section */}
+       <section 
+        className="py-20"
+        style={{ backgroundColor: colors.secondary }}
+      >
+        <div className="container px-6 mx-auto">
+          <h2 className="mb-16 text-4xl font-bold text-center text-white">
+            Our <span style={{ color: colors.primary }}>Journey</span>
+          </h2>
+          
+          <div className="relative">
+            <div className="absolute top-0 bottom-0 w-1 transform -translate-x-1/2 left-1/2 bg-white/30"></div>
+            {timelineEvents.map((event, index) => (
+              <div 
+                key={index} 
+                className={`mb-8 flex items-center w-full 
+                  ${index % 2 === 0 ? 'flex-row-reverse' : ''}
+                `}
+              >
+                <div 
+                  className={`w-5/12 ${
+                    index % 2 === 0 ? 'mr-auto pl-8' : 'ml-auto pr-8'
+                  }`}
+                >
+                  <div className="p-6 bg-white shadow-lg rounded-xl">
+                    <h3 
+                      className="mb-2 text-2xl font-semibold"
+                      style={{ color: colors.primary }}
+                    >
+                      {event.title}
+                    </h3>
+                    <p className="text-gray-600">{event.description}</p>
+                  </div>
+                </div>
+                <div className="relative flex justify-center w-1/12">
+                  <div 
+                    className="z-10 flex items-center justify-center w-16 h-16 rounded-full"
+                    style={{ 
+                      backgroundColor: colors.primary, 
+                      color: 'white' 
+                    }}
+                  >
+                    <event.icon className="w-8 h-8" />
+                  </div>
+                </div>
+                <div className="w-5/12">
+                  <div 
+                    className="text-2xl font-bold text-white text-opacity-50"
+                    style={{ 
+                      textAlign: index % 2 === 0 ? 'left' : 'right' 
+                    }}
+                  >
+                    {event.year}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
