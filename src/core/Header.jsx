@@ -45,6 +45,12 @@ const Header = () => {
         path: "/products/charging-socket",
         icon: <Check className="w-4 h-4" />,
         description: "Smart charging socket with advanced safety features"
+      },
+      { 
+        name: "Type-2-charging-plug-connector", 
+        path: "/products/type-2-charging-plug-connector",
+        icon: <Check className="w-4 h-4" />,
+        description: "High-performance charging connector for rapid charging"
       }
     ]
   };
