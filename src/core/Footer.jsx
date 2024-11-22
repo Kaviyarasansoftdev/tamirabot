@@ -116,7 +116,7 @@ const Footer = () => {
       <div className="pt-4 text-center border-t border-tertiary/50">
         <p>&copy; 2024 Tamirabot. All Rights Reserved.</p>
         <p className="mt-2">
-          Designed by{" "}
+          Designed & Developed by{" "}
           <a
             href="https://www.zehe.in"
             className="text-primary hover:underline"

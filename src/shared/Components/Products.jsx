@@ -1,12 +1,15 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Zap, Battery, Globe, Shield, ChevronLeft, Check, Download } from 'lucide-react';
+import { Zap, Battery, Globe, Shield, ChevronRight, PlayCircle } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const Product = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
+  const [activeSpec, setActiveSpec] = useState(null);
 
+  
   const products = {
     'charging-plug': {
       name: "CCS 2 Charging Plug Connector",
@@ -62,7 +65,7 @@ const Product = () => {
         ]
       }
     },
-    'charging-socket': {
+   'charging-socket': {
       name: "EV Charging Socket",
       description: "High-performance charging socket with intelligent power management and weatherproof design for reliable charging in all conditions.",
       image: "/assets/Products/CCS-2-Charging-Socket-3-768x512.png",
@@ -185,146 +188,164 @@ const Product = () => {
   }
 
   return (
-    <div className="min-h-screen pt-24 bg-gradient-to-b from-gray-50 to-white">
-      <div className="container px-4 py-12 mx-auto">
-
-        {/* Top Section */}
-        <div className="px-6 py-12 mb-12 bg-gray-100 rounded-lg shadow-md">
-          <h1 className="mb-4 text-4xl font-bold text-center text-gray-900">
-            {product.topSection.title}
-          </h1>
-          <p className="mb-2 text-lg text-center text-gray-600">
-            {product.topSection.subtitle}
-          </p>
-          <p className="mb-6 text-sm text-center text-gray-500">
-            {product.topSection.tagline}
-          </p>
-          <div className="flex justify-center gap-4">
-            {product.topSection.features.map((feature, index) => (
-              <div
-                key={index}
-                className="flex flex-col items-center p-4 text-center bg-white rounded-lg shadow-lg"
-              >
-                <p className="text-sm font-bold text-gray-900">
-                  {feature.label}
-                </p>
-                {feature.value && (
-                  <p className="text-sm text-gray-600">{feature.value}</p>
-                )}
+    <div className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <div className="relative pt-12 overflow-hidden bg-gradient-to-br from-red-50 to-white">
+        <motion.div 
+          className="container flex flex-col items-center gap-12 px-6 py-16 mx-auto lg:flex-row"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="space-y-8 lg:w-1/2">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <h1 className="mb-4 text-5xl font-bold text-gray-900">
+                {product.topSection.title}
+              </h1>
+              <p className="mb-8 text-xl text-gray-600">
+                {product.topSection.subtitle}
+              </p>
+              <div className="flex gap-4">
+                <button className="flex items-center gap-2 px-8 py-3 text-white transition-colors bg-red-500 rounded-lg hover:bg-red-600">
+                  Get Started <ChevronRight className="w-4 h-4" />
+                </button>
+                <button className="flex items-center gap-2 px-8 py-3 text-red-500 transition-colors border border-red-200 rounded-lg hover:bg-red-50">
+                  Watch Demo <PlayCircle className="w-4 h-4" />
+                </button>
               </div>
-            ))}
+            </motion.div>
           </div>
-        </div>
+          <div className="lg:w-1/2">
+            <motion.div
+              className="relative"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.4 }}
+            >
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500/10 to-transparent blur-3xl" />
+              <img 
+                src={product.image} 
+                alt={product.name}
+                className="relative z-10 w-full h-auto"
+              />
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
 
-
-        <div className="grid gap-12 lg:grid-cols-2">
-          {/* Product Image */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="relative overflow-hidden bg-white shadow-xl rounded-2xl"
+      {/* Features Grid */}
+      <div className="py-24 bg-white">
+        <div className="container px-6 mx-auto">
+          <motion.div 
+            className="mb-16 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
           >
-            <motion.img
-              src={product.image}
-              alt={product.name}
-              className="object-cover w-full h-[500px]"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.4 }}
-            />
+            <h2 className="mb-4 text-3xl font-bold text-gray-900">Advanced Features</h2>
+            <p className="max-w-2xl mx-auto text-gray-600">
+              Experience the next generation of EV charging technology with our advanced features and specifications.
+            </p>
           </motion.div>
 
-          {/* Product Information */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="space-y-8"
-          >
-            <div>
-              <h1 className="mb-4 text-4xl font-bold text-gray-900">
-                {product.name}
-              </h1>
-              <p className="text-lg text-gray-600">
-                {product.description}
-              </p>
-            </div>
-
-            {/* Specifications */}
-            <div className="grid grid-cols-2 gap-4">
-              {product.specs.map((spec, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ scale: 1.02 }}
-                  className="flex items-center p-4 space-x-3 bg-white shadow-md rounded-xl"
-                >
-                  <div className="p-2 rounded-lg bg-[#EF4A50]/10">
-                    <div className="w-5 h-5 text-[#EF4A50]">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+            {product.specs.map((spec, index) => (
+              <motion.div
+                key={index}
+                className="relative p-6 overflow-hidden transition-all duration-300 bg-white border border-gray-100 group rounded-xl hover:border-red-200"
+                whileHover={{ y: -5 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <div className="absolute inset-0 transition-opacity opacity-0 bg-gradient-to-br from-red-50 to-transparent group-hover:opacity-100" />
+                <div className="relative z-10">
+                  <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-red-500/10">
+                    <div className="w-6 h-6 text-red-500">
                       {spec.icon}
                     </div>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">
-                      {spec.label}
-                    </p>
-                    <p className="text-sm font-bold text-gray-900">
-                      {spec.value}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-{/* Key Features Section */}
-<div className="mt-12 space-y-12">
-  {/* Connectivity Specifications */}
-  <div className="p-6 bg-gray-100 rounded-lg shadow-md">
-    <h2 className="mb-6 text-2xl font-bold text-center text-gray-900">
-      Connectivity Specifications & Parameters
-    </h2>
-    <p className="mb-8 text-sm text-center text-gray-500">
-      A Closer Look at Our Connector Specifications.
-    </p>
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      {product.keyFeatures.connectivity.map((item, index) => (
-        <div
-          key={index}
-          className="p-4 bg-white border rounded-lg shadow-md hover:shadow-lg"
-        >
-          <h3 className="text-lg font-semibold text-gray-900">
-            {item.modelNumber}
-          </h3>
-          <p className="mt-2 text-sm text-gray-600">
-            <strong>Rated Current:</strong> {item.ratedCurrent}
-          </p>
-          <p className="mt-2 text-sm text-gray-600">
-            <strong>Cable Specifications:</strong> {item.cableSpecs}
-          </p>
+                  <h3 className="mb-2 text-lg font-semibold text-gray-900">{spec.label}</h3>
+                  <p className="text-gray-600">{spec.value}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
+      </div>
 
-  {/* Additional Specifications */}
-  <div className="p-6 bg-gray-100 rounded-lg shadow-md">
-    <h2 className="mb-6 text-2xl font-bold text-center text-gray-900">
-      Specifications
-    </h2>
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {product.keyFeatures.specifications.map((spec, index) => (
-        <div
-          key={index}
-          className="flex flex-col p-4 bg-white border rounded-lg shadow-md hover:shadow-lg"
-        >
-          <h4 className="text-sm font-bold text-gray-900">
-            {spec.label}
-          </h4>
-          <p className="mt-1 text-sm text-gray-600">{spec.value}</p>
-        </div>
-      ))}
-    </div>
-  </div>
-</div>
-
-
+      {/* Specifications Section */}
+      <div className="py-24 bg-gray-50">
+        <div className="container px-6 mx-auto">
+          <motion.div 
+            className="mb-16 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="mb-4 text-3xl font-bold text-gray-900">Technical Specifications</h2>
+            <p className="max-w-2xl mx-auto text-gray-600">
+              Detailed technical specifications and connectivity options for maximum compatibility.
+            </p>
           </motion.div>
+
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
+            {/* Specifications */}
+            <div className="space-y-6">
+              <h3 className="mb-6 text-xl font-semibold text-gray-900">Product Specifications</h3>
+              <div className="grid gap-4">
+                {product.keyFeatures.specifications.map((spec, index) => (
+                  <motion.div
+                    key={index}
+                    className="p-4 transition-colors bg-white border border-gray-100 rounded-lg hover:border-red-200"
+                    whileHover={{ x: 5 }}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <h4 className="text-sm font-medium text-gray-900">{spec.label}</h4>
+                    <p className="mt-1 text-gray-600">{spec.value}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Connectivity */}
+            <div className="space-y-6">
+              <h3 className="mb-6 text-xl font-semibold text-gray-900">Connectivity Options</h3>
+              <div className="grid gap-4">
+                {product.keyFeatures.connectivity.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    className="p-6 transition-colors bg-white border border-gray-100 rounded-lg hover:border-red-200"
+                    whileHover={{ x: 5 }}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <h4 className="mb-4 text-lg font-medium text-gray-900">{item.modelNumber}</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-sm text-gray-500">Rated Current</p>
+                        <p className="text-gray-900">{item.ratedCurrent}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-500">Cable Specifications</p>
+                        <p className="text-gray-900">{item.cableSpecs}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
